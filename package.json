@@ -19,7 +19,7 @@
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepublishOnly": "bun run build"
+    "prepublishOnly": "bun run format && bun run lint && bun run type-check && bun run build"
   },
   "keywords": [
     "git",
