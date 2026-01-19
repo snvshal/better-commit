@@ -18,54 +18,54 @@ jobs:
         node-version: [18, 20, 22]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: 1.1.10
 
       - name: Install dependencies
         run: bun install --frozen-lockfile --ignore-scripts
 
-      - name: Run type check
+      - name: Type check
         run: bun run type-check
 
-      - name: Run linter
+      - name: Lint
         run: bun run lint
 
-      - name: Check formatting
+      - name: Format check
         run: bun run format:check
 
-      - name: Build package
+      - name: Build
         run: bun run build
 
       - name: CLI smoke test (built output)
-        run: node ./dist/index.js --help
+        run: node dist/index.js --help
 
   build-check:
     name: Verify package can be published
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: 1.1.10
 
       - name: Install dependencies
         run: bun install --frozen-lockfile --ignore-scripts
@@ -76,15 +76,15 @@ jobs:
       - name: Pack package
         run: npm pack
 
-      - name: Test install from tarball
+      - name: Install packed tarball locally
         run: |
           FILE=$(ls *.tgz)
-          npm install -g ./$FILE
+          npm install ./$FILE
 
-      - name: Verify CLI works when installed globally
+      - name: Verify CLI binaries
         run: |
-          better-commit --help
-          bc --help
+          npx better-commit --help
+          npx bc --help
 
       - name: Show package contents
         run: npm pack --dry-run
