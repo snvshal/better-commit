@@ -183,8 +183,8 @@ export const BetterCommitApp: React.FC<AppProps> = ({
           setPushLogs(["Pushing to remote..."]);
 
           try {
-            const pushResult = await gitService.push();
-            setPushLogs((prev) => [...prev, "Push successful!", pushResult]);
+            await gitService.push();
+            setPushLogs((prev) => [...prev, "Push successful!"]);
           } catch (error) {
             setPushLogs((prev) => [
               ...prev,
