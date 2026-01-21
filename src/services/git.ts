@@ -125,4 +125,13 @@ export class GitService {
       return false;
     }
   }
+
+  async push(): Promise<string> {
+    try {
+      await this.git.push();
+      return "Push successful";
+    } catch (error) {
+      throw new Error(`Failed to push: ${error}`);
+    }
+  }
 }

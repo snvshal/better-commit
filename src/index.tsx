@@ -25,6 +25,7 @@ program
 
 // Add options
 program.option("-a, --all", "stage all files before committing");
+program.option("-p, --push", "push to remote after committing");
 
 // Subcommand for config
 program
@@ -125,6 +126,7 @@ program.action(async () => {
     const { waitUntilExit } = render(
       <BetterCommitApp
         addAll={options.all || false}
+        pushAfterCommit={options.push || false}
         onExit={(message) => {
           if (message) exitMessage = message;
         }}
