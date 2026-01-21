@@ -125,4 +125,9 @@ export class GitService {
       return false;
     }
   }
+
+  async push(): Promise<string> {
+    await this.git.push();
+    return "Push successful";
+  }
 }

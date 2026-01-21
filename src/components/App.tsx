@@ -10,11 +10,13 @@ import { AppState, GitFile } from "../types";
 
 interface AppProps {
   addAll?: boolean;
+  pushAfterCommit?: boolean;
   onExit: (message?: string) => void;
 }
 
 export const BetterCommitApp: React.FC<AppProps> = ({
   addAll: _addAll = false,
+  pushAfterCommit = false,
   onExit,
 }) => {
   const { exit } = useApp();
@@ -32,19 +34,32 @@ export const BetterCommitApp: React.FC<AppProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | undefined>(
     undefined,
   );
+  const [isPushing, setIsPushing] = useState(false);
+  const [pushLogs, setPushLogs] = useState<string[]>([]);
   const [customInput, setCustomInput] = useState("");
   const [isCustomInputMode, setIsCustomInputMode] = useState(false);
 
   // Auto-exit when showing success message
   useEffect(() => {
-    if (successMessage) {
+    if (
+      successMessage &&
+      !isPushing &&
+      (!pushAfterCommit || pushLogs.length > 0)
+    ) {
       write("\x1B[2J\x1B[0f");
       const timer = setTimeout(() => {
         exit();
       }, 1500);
       return () => clearTimeout(timer);
     }
-  }, [successMessage, exit, write]);
+  }, [
+    successMessage,
+    isPushing,
+    pushAfterCommit,
+    pushLogs.length,
+    exit,
+    write,
+  ]);
 
   // Auto-exit when error occurs
   useEffect(() => {
@@ -161,6 +176,24 @@ export const BetterCommitApp: React.FC<AppProps> = ({
       try {
         await gitService.commit(selectedSuggestion.message);
         setSuccessMessage(selectedSuggestion.message);
+
+        // Push after commit if -p flag was used
+        if (pushAfterCommit) {
+          setIsPushing(true);
+          setPushLogs(["Pushing to remote..."]);
+
+          try {
+            await gitService.push();
+            setPushLogs((prev) => [...prev, "Push successful!"]);
+          } catch (error) {
+            setPushLogs((prev) => [
+              ...prev,
+              `Failed to push: ${error instanceof Error ? error.message : String(error)}`,
+            ]);
+          } finally {
+            setIsPushing(false);
+          }
+        }
       } catch (error) {
         setState((prev) => ({
           ...prev,
@@ -248,6 +281,37 @@ export const BetterCommitApp: React.FC<AppProps> = ({
               Changes have been committed successfully!
             </Text>
           </Box>
+
+          {/* Push logs if -p flag was used */}
+          {pushAfterCommit && pushLogs.length > 0 && (
+            <Box
+              flexDirection="column"
+              marginTop={1}
+              borderTop={true}
+              borderStyle="single"
+              borderColor="#374151"
+              paddingTop={1}
+            >
+              <Box marginBottom={1}>
+                <Text color="#60a5fa" bold>
+                  {isPushing ? "Pushing..." : "Push Logs:"}
+                </Text>
+              </Box>
+              {pushLogs.map((log, index) => (
+                <Box key={index}>
+                  <Text
+                    color={
+                      log.includes("failed") || log.includes("Failed")
+                        ? "#ef4444"
+                        : "#9ca3af"
+                    }
+                  >
+                    {log}
+                  </Text>
+                </Box>
+              ))}
+            </Box>
+          )}
         </Box>
       </Box>
     );

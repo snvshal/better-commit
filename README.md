@@ -57,6 +57,12 @@ better-commit
 
 # Or stage all files and run (like git commit -am)
 better-commit -a
+
+# Push to remote after committing
+better-commit -p
+
+# Stage all files, commit, and push (like git commit -am && git push)
+better-commit -ap
 ```
 
 ### Alias
@@ -66,6 +72,8 @@ You can use the short alias `bc` instead of typing `better-commit`:
 ```bash
 bc          # Generate commit
 bc -a       # Stage all and commit
+bc -p       # Commit and push
+bc -ap      # Stage all, commit, and push
 bc config   # Open configuration
 ```
 
