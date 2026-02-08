@@ -74,7 +74,7 @@ export const CustomInputPrompt: React.FC<CustomInputPromptProps> = ({
       <Box marginTop={1}>
         <Text color="#6b7280">
           <Text color="#10b981">Enter</Text> submit{" "}
-          <Text color="#ef4444">Esc</Text> cancel
+          <Text color="#ef4444">Esc</Text> Cancel
         </Text>
       </Box>
     </Box>
