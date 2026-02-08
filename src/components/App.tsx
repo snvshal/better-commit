@@ -215,8 +215,6 @@ export const BetterCommitApp: React.FC<AppProps> = ({
 
   const handleCustomInputCancel = () => {
     setIsCustomInputMode(false);
-    onExit("Custom input cancelled");
-    exit();
   };
 
   const handleCustomInputSubmit = async () => {

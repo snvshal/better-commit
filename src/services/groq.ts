@@ -1,12 +1,13 @@
-import Groq from "groq-sdk";
+import { createGroq } from "@ai-sdk/groq";
+import { generateText } from "ai";
 import { CommitSuggestion, GitFile, GitCommit, Config } from "../types";
 
 export class GroqService {
-  private client: Groq;
+  private apiKey: string;
   private config: Config;
 
   constructor(apiKey: string, config: Config) {
-    this.client = new Groq({ apiKey });
+    this.apiKey = apiKey;
     this.config = config;
   }
 
@@ -25,8 +26,9 @@ export class GroqService {
     const prompt = this.buildPrompt(stagedFiles, diff, recentCommits);
 
     try {
-      const response = await this.client.chat.completions.create({
-        model: this.config.model || "llama-3.1-8b-instant",
+      const groq = createGroq({ apiKey: this.apiKey });
+      const { text } = await generateText({
+        model: groq(this.config.model || "llama-3.1-8b-instant"),
         messages: [
           {
             role: "system",
@@ -41,18 +43,15 @@ export class GroqService {
             content: prompt,
           },
         ],
-        // response_format: { type: "json_object" }, // Not all models support this, so we rely on system prompt + parsing
-        max_tokens: 2048, // Increased for reasoning models
+        maxTokens: 2048,
         temperature: 0.7,
       });
 
-      const content = response.choices[0]?.message?.content;
-
-      if (!content) {
+      if (!text) {
         throw new Error("No response from Groq API");
       }
 
-      return this.parseSuggestions(content);
+      return this.parseSuggestions(text);
     } catch (e: unknown) {
       const error = e as { status?: number; message?: string };
       if (error?.status === 401) {
@@ -95,8 +94,9 @@ export class GroqService {
     );
 
     try {
-      const response = await this.client.chat.completions.create({
-        model: this.config.model || "llama-3.1-8b-instant",
+      const groq = createGroq({ apiKey: this.apiKey });
+      const { text } = await generateText({
+        model: groq(this.config.model || "llama-3.1-8b-instant"),
         messages: [
           {
             role: "system",
@@ -111,17 +111,15 @@ export class GroqService {
             content: prompt,
           },
         ],
-        // response_format: { type: "json_object" },
-        max_tokens: 2048,
+        maxTokens: 2048,
         temperature: 0.7,
       });
 
-      const content = response.choices[0]?.message?.content;
-      if (!content) {
+      if (!text) {
         throw new Error("No response from Groq API");
       }
 
-      return this.parseSuggestions(content);
+      return this.parseSuggestions(text);
     } catch (e: unknown) {
       const error = e as { status?: number; message?: string };
       if (error?.status === 401) {
