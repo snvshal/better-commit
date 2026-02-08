@@ -1,11 +1,13 @@
-import { groq } from "@ai-sdk/groq";
+import { createGroq } from "@ai-sdk/groq";
 import { generateText } from "ai";
 import { CommitSuggestion, GitFile, GitCommit, Config } from "../types";
 
 export class GroqService {
+  private apiKey: string;
   private config: Config;
 
-  constructor(_apiKey: string, config: Config) {
+  constructor(apiKey: string, config: Config) {
+    this.apiKey = apiKey;
     this.config = config;
   }
 
@@ -24,6 +26,7 @@ export class GroqService {
     const prompt = this.buildPrompt(stagedFiles, diff, recentCommits);
 
     try {
+      const groq = createGroq({ apiKey: this.apiKey });
       const { text } = await generateText({
         model: groq(this.config.model || "llama-3.1-8b-instant"),
         messages: [
@@ -91,6 +94,7 @@ export class GroqService {
     );
 
     try {
+      const groq = createGroq({ apiKey: this.apiKey });
       const { text } = await generateText({
         model: groq(this.config.model || "llama-3.1-8b-instant"),
         messages: [
