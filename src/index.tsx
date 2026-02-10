@@ -6,6 +6,7 @@ import { Command } from "commander";
 import { render } from "ink";
 import { App as BetterCommitApp } from "./components/App";
 import { ConfigApp } from "./components/ConfigApp";
+import { createRequire } from "module";
 
 // Handle raw mode errors gracefully
 const handleRawModeError = (error: Error, fallbackMessage: string) => {
@@ -20,8 +21,12 @@ const program = new Command();
 
 program
   .name("better-commit")
-  .description("AI-powered git commit message generator with beautiful TUI")
-  .version("1.0.0");
+  .description("AI-powered git commit message generator with beautiful TUI");
+
+// Load version from package.json so the CLI stays in sync with the published package
+const require = createRequire(import.meta.url);
+const pkg = require("../package.json");
+program.version(pkg.version);
 
 // Add options
 program.option("-a, --all", "stage all files before committing");
