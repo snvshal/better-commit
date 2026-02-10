@@ -32,8 +32,8 @@
   "author": "VSHAL",
   "license": "MIT",
   "dependencies": {
-    "@ai-sdk/groq": "^1.2.9",
-    "ai": "^4.3.19",
+    "@ai-sdk/groq": "^3.0.22",
+    "ai": "^6.0.78",
     "commander": "^12.1.0",
     "ink": "^5.2.1",
     "react": "^18.3.1",
