@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-import "./suppress-warnings";
-
 import { Command } from "commander";
 import { render } from "ink";
 import { App as BetterCommitApp } from "./components/App";
