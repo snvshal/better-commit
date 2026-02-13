@@ -45,7 +45,7 @@ export class ConfigManager {
     try {
       writeFileSync(CONFIG_FILE, JSON.stringify(this.config, null, 2));
     } catch (error) {
-      throw new Error(`Failed to save config: ${error}`);
+      throw new Error(`Failed to save config: ${error}`, { cause: error });
     }
   }
 

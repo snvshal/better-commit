@@ -15,7 +15,7 @@ AI-powered git commit message generator with a beautiful TUI (Terminal User Inte
 
 ### Prerequisites
 
-- Node.js 18+ or Bun
+- Node.js 20+ or Bun
 - A Groq API key (get one free at [console.groq.com](https://console.groq.com))
 
 ### Quick Start
