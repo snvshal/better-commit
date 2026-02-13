@@ -46,10 +46,9 @@ export const BetterCommitApp: React.FC<AppProps> = ({
       !isPushing &&
       (!pushAfterCommit || pushLogs.length > 0)
     ) {
-      write("\x1B[2J\x1B[0f");
       const timer = setTimeout(() => {
         exit();
-      }, 1500);
+      }, 0);
       return () => clearTimeout(timer);
     }
   }, [
@@ -252,47 +251,32 @@ export const BetterCommitApp: React.FC<AppProps> = ({
     return (
       <Box
         flexDirection="column"
-        padding={2}
         justifyContent="center"
         alignItems="center"
         flexGrow={1}
-        width="100%"
-        height="100%"
+        padding={2}
       >
         <Box
           flexDirection="column"
-          borderStyle="single"
-          borderColor="#10b981"
-          padding={2}
-          width={60}
+          borderStyle="round"
+          borderColor="green"
+          paddingX={4}
+          paddingY={2}
         >
-          <Box marginBottom={1} justifyContent="center">
-            <Text color="#10b981" bold>
-              Commit Successful
+          <Box justifyContent="center" marginBottom={1}>
+            <Text bold color="green">
+              {"\u2713"} Commit Successful
             </Text>
           </Box>
-          <Box marginBottom={1} justifyContent="center">
-            <Text color="#e5e7eb">"{successMessage}"</Text>
-          </Box>
-          <Box justifyContent="center">
-            <Text color="#10b981">
-              Changes have been committed successfully!
-            </Text>
+          <Box justifyContent="center" marginBottom={1}>
+            <Text color="cyan">{successMessage}</Text>
           </Box>
 
-          {/* Push logs if -p flag was used */}
           {pushAfterCommit && pushLogs.length > 0 && (
-            <Box
-              flexDirection="column"
-              marginTop={1}
-              borderTop={true}
-              borderStyle="single"
-              borderColor="#374151"
-              paddingTop={1}
-            >
-              <Box marginBottom={1}>
-                <Text color="#60a5fa" bold>
-                  {isPushing ? "Pushing..." : "Push Logs:"}
+            <Box flexDirection="column" marginTop={1}>
+              <Box>
+                <Text bold color="cyan">
+                  Push:
                 </Text>
               </Box>
               {pushLogs.map((log, index) => (
@@ -300,11 +284,11 @@ export const BetterCommitApp: React.FC<AppProps> = ({
                   <Text
                     color={
                       log.includes("failed") || log.includes("Failed")
-                        ? "#ef4444"
-                        : "#9ca3af"
+                        ? "red"
+                        : "green"
                     }
                   >
-                    {log}
+                    {"\u2022"} {log}
                   </Text>
                 </Box>
               ))}
