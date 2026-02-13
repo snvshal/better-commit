@@ -1,5 +1,9 @@
 // Suppress punycode and url.parse deprecation warnings
-const originalEmit = process.emit;
+const originalEmit: (
+  name: string,
+  data: unknown,
+  ...args: unknown[]
+) => boolean = process.emit;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 process.emit = function (name: any, data: any, ...args: any[]): boolean {
   if (

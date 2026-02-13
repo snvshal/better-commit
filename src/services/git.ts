@@ -32,7 +32,7 @@ export class GitService {
 
       return stagedFiles;
     } catch (error) {
-      throw new Error(`Failed to get staged files: ${error}`);
+      throw new Error(`Failed to get staged files: ${error}`, { cause: error });
     }
   }
 
@@ -57,7 +57,7 @@ export class GitService {
     try {
       await this.git.commit(message);
     } catch (error) {
-      throw new Error(`Failed to commit: ${error}`);
+      throw new Error(`Failed to commit: ${error}`, { cause: error });
     }
   }
 
