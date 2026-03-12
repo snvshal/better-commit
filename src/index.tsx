@@ -63,7 +63,6 @@ program
         },
       );
       await waitUntilExit();
-      if (exitMessage) console.log(exitMessage);
       process.exit(0);
     } catch (error) {
       handleRawModeError(

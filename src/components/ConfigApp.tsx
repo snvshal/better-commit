@@ -11,6 +11,16 @@ interface ConfigAppProps {
 export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
   const { exit } = useApp();
   const [config, setConfig] = useState<Config>(configManager.getConfig());
+  const [exitMessage, setExitMessage] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (exitMessage) {
+      const timer = setTimeout(() => {
+        exit();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [exitMessage, exit]);
 
   const [activeDialog, setActiveDialog] = useState<{
     key: keyof Config;
@@ -67,20 +77,18 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
   const saveAndExit = useCallback(() => {
     const finalConfig = {
       ...config,
-      // model was hardcoded here previously, now we let user select it
-      // model: "llama-3.1-8b-instant",
       maxHistoryCommits: 40,
       language: "en",
     };
     configManager.updateConfig(finalConfig);
     onExit("Configuration saved");
-    exit();
-  }, [config, onExit, exit]);
+    setExitMessage("Configuration saved");
+  }, [config, onExit]);
 
   const cancelAndExit = useCallback(() => {
     onExit("Configuration cancelled");
-    exit();
-  }, [onExit, exit]);
+    setExitMessage("Configuration cancelled");
+  }, [onExit]);
 
   const handleInput = useCallback(
     (input: string, key: Key) => {
@@ -176,8 +184,14 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
       borderStyle="round"
       borderColor="#334155"
     >
-      {/* Dialog or Main Content */}
-      {activeDialog ? (
+      {/* Exit Message */}
+      {exitMessage ? (
+        <Box flexGrow={1} justifyContent="center" alignItems="center">
+          <Text bold color="#22c55e">
+            {exitMessage}
+          </Text>
+        </Box>
+      ) : activeDialog ? (
         <Box flexGrow={1} justifyContent="center" alignItems="center">
           <TuiDialog
             title={activeDialog.title}
@@ -270,9 +284,14 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
         </Box>
       )}
 
-      {/* Footer - only show when no dialog is open */}
-      {!activeDialog && (
-        <Box borderStyle="round" borderColor="#334155" paddingY={1} paddingX={2}>
+      {/* Footer - only show when no dialog is open and not exiting */}
+      {!activeDialog && !exitMessage && (
+        <Box
+          borderStyle="round"
+          borderColor="#334155"
+          paddingY={1}
+          paddingX={2}
+        >
           <Box>
             <Text color="#94a3b8">Use </Text>
             <Text color="#38bdf8">↑↓</Text>

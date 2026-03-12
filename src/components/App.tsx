@@ -30,7 +30,7 @@ export const BetterCommitApp: React.FC<AppProps> = ({
   });
 
   const [isUsingFallback, setIsUsingFallback] = useState(false);
-
+  const [exitMessage, setExitMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | undefined>(
     undefined,
   );
@@ -47,8 +47,8 @@ export const BetterCommitApp: React.FC<AppProps> = ({
       (!pushAfterCommit || pushLogs.length > 0)
     ) {
       const timer = setTimeout(() => {
-        exit();
-      }, 0);
+        setExitMessage(successMessage);
+      }, 100);
       return () => clearTimeout(timer);
     }
   }, [
@@ -60,19 +60,29 @@ export const BetterCommitApp: React.FC<AppProps> = ({
     write,
   ]);
 
+  // Handle exit after showing message
+  useEffect(() => {
+    if (exitMessage) {
+      const timer = setTimeout(() => {
+        exit();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [exitMessage, exit]);
+
   // Auto-exit when error occurs
   useEffect(() => {
     if (state.error) {
-      exit();
+      setExitMessage(state.error);
     }
-  }, [state.error, exit]);
+  }, [state.error]);
 
   // Handle global exit keys (disabled when custom input is active)
   useInput(
     (input, key) => {
       if (key.escape || (key.ctrl && input === "c")) {
         onExit("Operation cancelled");
-        exit();
+        setExitMessage("Operation cancelled");
       }
     },
     { isActive: !isCustomInputMode },
@@ -313,6 +323,24 @@ export const BetterCommitApp: React.FC<AppProps> = ({
     );
   }
 
+  if (exitMessage) {
+    return (
+      <Box
+        flexDirection="column"
+        paddingX={2}
+        paddingY={1}
+        borderStyle="round"
+        borderColor="#334155"
+      >
+        <Box flexGrow={1} justifyContent="center" alignItems="center">
+          <Text bold color="#22c55e">
+            {exitMessage}
+          </Text>
+        </Box>
+      </Box>
+    );
+  }
+
   return (
     <Box
       flexDirection="column"
@@ -364,10 +392,10 @@ export const BetterCommitApp: React.FC<AppProps> = ({
           <Box>
             <Text color="#38bdf8">↑↓</Text>
             <Text color="#94a3b8"> navigate</Text>
-            <Text color="#94a3b8">  </Text>
+            <Text color="#94a3b8"> </Text>
             <Text color="#22c55e">Enter</Text>
             <Text color="#94a3b8"> select</Text>
-            <Text color="#94a3b8">  </Text>
+            <Text color="#94a3b8"> </Text>
             <Text color="#f97316">Esc</Text>
             <Text color="#94a3b8"> exit</Text>
           </Box>
