@@ -151,36 +151,31 @@ export const TuiDialog: React.FC<DialogProps> = ({
       )}
 
       {/* Footer */}
-      <Box
-        borderStyle="round"
-        borderColor="#334155"
-        paddingY={1}
-        paddingX={2}
-      >
+      <Box borderStyle="round" borderColor="#334155" paddingY={1} paddingX={2}>
         {type === "select" ? (
           <Box>
             <Text color="#38bdf8">↑↓</Text>
-            <Text color="#94a3b8"> navigate  </Text>
+            <Text color="#94a3b8"> navigate </Text>
             <Text color="#22c55e">Enter</Text>
-            <Text color="#94a3b8"> confirm  </Text>
+            <Text color="#94a3b8"> confirm </Text>
             <Text color="#f97316">Esc</Text>
             <Text color="#94a3b8"> cancel</Text>
           </Box>
         ) : type === "textarea" ? (
           <Box>
             <Text color="#38bdf8">←→</Text>
-            <Text color="#94a3b8"> move  </Text>
+            <Text color="#94a3b8"> move </Text>
             <Text color="#22c55e">Tab</Text>
-            <Text color="#94a3b8"> submit  </Text>
+            <Text color="#94a3b8"> submit </Text>
             <Text color="#f97316">Esc</Text>
             <Text color="#94a3b8"> cancel</Text>
           </Box>
         ) : (
           <Box>
             <Text color="#38bdf8">←→</Text>
-            <Text color="#94a3b8"> move  </Text>
+            <Text color="#94a3b8"> move </Text>
             <Text color="#22c55e">Enter</Text>
-            <Text color="#94a3b8"> confirm  </Text>
+            <Text color="#94a3b8"> confirm </Text>
             <Text color="#f97316">Esc</Text>
             <Text color="#94a3b8"> cancel</Text>
           </Box>

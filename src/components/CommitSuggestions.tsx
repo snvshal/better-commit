@@ -150,9 +150,7 @@ export const CommitSuggestions: React.FC<CommitSuggestionsProps> = ({
             </Box>
             <Text
               color={
-                selectedIndex === suggestions.length + 1
-                  ? "#f59e0b"
-                  : "#64748b"
+                selectedIndex === suggestions.length + 1 ? "#f59e0b" : "#64748b"
               }
               bold={selectedIndex === suggestions.length + 1}
             >
