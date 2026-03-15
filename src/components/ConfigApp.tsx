@@ -385,10 +385,24 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
           </Box>
 
           <Box marginTop={1}>
-            <Text color={colors.text.muted} dimColor>
-              {expandedIndex !== null
-                ? "↑↓ navigate • Enter confirm • Esc cancel"
-                : "↑↓ navigate • Enter edit • Esc exit"}
+            <Text color={colors.text.muted}>
+              {expandedIndex !== null ? (
+                <>
+                  <Text color={colors.primary}>↑↓</Text> navigate
+                  <Text color={colors.text.secondary}> • </Text>
+                  <Text color={colors.accent}>Enter</Text> confirm
+                  <Text color={colors.text.secondary}> • </Text>
+                  <Text color={colors.warning}>Esc</Text> cancel
+                </>
+              ) : (
+                <>
+                  <Text color={colors.primary}>↑↓</Text> navigate
+                  <Text color={colors.text.secondary}> • </Text>
+                  <Text color={colors.accent}>Enter</Text> edit
+                  <Text color={colors.text.secondary}> • </Text>
+                  <Text color={colors.warning}>Esc</Text> exit
+                </>
+              )}
             </Text>
           </Box>
         </>
