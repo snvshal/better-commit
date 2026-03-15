@@ -2,6 +2,7 @@ import React, { useState, useCallback, useMemo } from "react";
 import { Box, Text, useInput, useApp, Key } from "ink";
 import { configManager } from "../utils/config";
 import { Config } from "../types";
+import { colors } from "../theme/colors";
 
 interface ConfigAppProps {
   onExit: (message?: string) => void;
@@ -225,14 +226,23 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
     <Box flexDirection="column" paddingY={1} flexGrow={1} width="100%">
       {exitMessage ? (
         <Box flexGrow={1} justifyContent="center" alignItems="center">
-          <Text bold color="#22c55e">
-            {exitMessage}
-          </Text>
+          <Box
+            flexGrow={1}
+            justifyContent="center"
+            borderStyle="round"
+            borderColor={colors.border.accent}
+            paddingX={4}
+            paddingY={1}
+          >
+            <Text bold color={colors.accent}>
+              {"\u2713"} {exitMessage}
+            </Text>
+          </Box>
         </Box>
       ) : (
         <>
           <Box marginBottom={1}>
-            <Text bold color="#22d3ee">
+            <Text bold color={colors.primary}>
               Configure Better-Commit
             </Text>
           </Box>
@@ -246,16 +256,25 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
                 <Box key={item.key} flexDirection="column">
                   <Box flexDirection="row" alignItems="center">
                     <Box width={1}>
-                      <Text bold color={isSel ? "#a5b4fc" : "#1e293b"}>
+                      <Text
+                        bold
+                        color={
+                          isSel ? colors.primary : colors.background.primary
+                        }
+                      >
                         │
                       </Text>
                     </Box>
                     <Box
                       flexGrow={1}
-                      backgroundColor={isSel ? "#1e293b" : undefined}
+                      backgroundColor={
+                        isSel ? colors.background.primary : undefined
+                      }
                       paddingX={1}
                     >
-                      <Text color={isSel ? "#a5b4fc" : "#e2e8f0"}>
+                      <Text
+                        color={isSel ? colors.primary : colors.text.primary}
+                      >
                         {item.label}
                       </Text>
                     </Box>
@@ -263,16 +282,27 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
                   {!isExp && (
                     <Box flexDirection="row" alignItems="center">
                       <Box width={1}>
-                        <Text bold color={isSel ? "#a5b4fc" : "#1e293b"}>
+                        <Text
+                          bold
+                          color={
+                            isSel ? colors.primary : colors.background.primary
+                          }
+                        >
                           │
                         </Text>
                       </Box>
                       <Box
                         flexGrow={1}
-                        backgroundColor={isSel ? "#1e293b" : undefined}
+                        backgroundColor={
+                          isSel ? colors.background.primary : undefined
+                        }
                         paddingX={1}
                       >
-                        <Text color={isSel ? "#94a3b8" : "#64748b"}>
+                        <Text
+                          color={
+                            isSel ? colors.text.secondary : colors.text.muted
+                          }
+                        >
                           {renderValue(item.key)}
                         </Text>
                       </Box>
@@ -287,7 +317,9 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
                             <Text
                               bold
                               color={
-                                optIdx === optionIndex ? "#a5b4fc" : "#1e293b"
+                                optIdx === optionIndex
+                                  ? colors.primary
+                                  : colors.background.primary
                               }
                             >
                               │
@@ -296,13 +328,17 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
                           <Box
                             flexGrow={1}
                             backgroundColor={
-                              optIdx === optionIndex ? "#1e293b" : undefined
+                              optIdx === optionIndex
+                                ? colors.background.primary
+                                : undefined
                             }
                             paddingX={1}
                           >
                             <Text
                               color={
-                                optIdx === optionIndex ? "#a5b4fc" : "#64748b"
+                                optIdx === optionIndex
+                                  ? colors.primary
+                                  : colors.text.muted
                               }
                             >
                               {opt}
@@ -316,12 +352,16 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
                   {isExp && item.type !== "select" && (
                     <Box flexDirection="row" alignItems="center">
                       <Box width={1}>
-                        <Text bold color="#a5b4fc">
+                        <Text bold color={colors.primary}>
                           │
                         </Text>
                       </Box>
-                      <Box flexGrow={1} backgroundColor="#1e293b" paddingX={1}>
-                        <Text color="#a5b4fc">
+                      <Box
+                        flexGrow={1}
+                        backgroundColor={colors.background.primary}
+                        paddingX={1}
+                      >
+                        <Text color={colors.primary}>
                           {item.type === "password"
                             ? editValue
                                 .split("")
@@ -345,7 +385,7 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
           </Box>
 
           <Box marginTop={1}>
-            <Text color="#64748b" dimColor>
+            <Text color={colors.text.muted} dimColor>
               {expandedIndex !== null
                 ? "↑↓ navigate • Enter confirm • Esc cancel"
                 : "↑↓ navigate • Enter edit • Esc exit"}
