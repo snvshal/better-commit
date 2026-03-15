@@ -331,7 +331,8 @@ export const BetterCommitApp: React.FC<AppProps> = ({
         paddingX={2}
         paddingY={1}
         borderStyle="round"
-        borderColor={colors.border.default}
+        borderColor={colors.border.accent}
+        flexGrow={1}
       >
         <Box flexGrow={1} justifyContent="center" alignItems="center">
           <Text bold color={colors.accent}>
