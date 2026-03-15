@@ -7,6 +7,7 @@ import { StagedFiles } from "./StagedFiles";
 import { CommitSuggestions } from "./CommitSuggestions";
 import { CustomInputPrompt } from "./CustomInputPrompt";
 import { AppState, GitFile } from "../types";
+import { colors } from "../theme/colors";
 
 interface AppProps {
   addAll?: boolean;
@@ -242,15 +243,15 @@ export const BetterCommitApp: React.FC<AppProps> = ({
     return (
       <Box
         borderStyle="single"
-        borderColor="#ef4444"
+        borderColor={colors.border.error}
         padding={2}
         marginBottom={1}
       >
-        <Text color="#ef4444" bold>
+        <Text color={colors.error} bold>
           Error
         </Text>
         <Box marginTop={1}>
-          <Text color="#e5e7eb">{state.error}</Text>
+          <Text color={colors.text.secondary}>{state.error}</Text>
         </Box>
       </Box>
     );
@@ -269,23 +270,23 @@ export const BetterCommitApp: React.FC<AppProps> = ({
         <Box
           flexDirection="column"
           borderStyle="round"
-          borderColor="green"
+          borderColor={colors.border.accent}
           paddingX={4}
           paddingY={2}
         >
           <Box justifyContent="center" marginBottom={1}>
-            <Text bold color="green">
+            <Text bold color={colors.accent}>
               {"\u2713"} Commit Successful
             </Text>
           </Box>
           <Box justifyContent="center" marginBottom={1}>
-            <Text color="cyan">{successMessage}</Text>
+            <Text color={colors.primary}>{successMessage}</Text>
           </Box>
 
           {pushAfterCommit && pushLogs.length > 0 && (
             <Box flexDirection="column" marginTop={1}>
               <Box>
-                <Text bold color="cyan">
+                <Text bold color={colors.primary}>
                   Push:
                 </Text>
               </Box>
@@ -294,8 +295,8 @@ export const BetterCommitApp: React.FC<AppProps> = ({
                   <Text
                     color={
                       log.includes("failed") || log.includes("Failed")
-                        ? "red"
-                        : "green"
+                        ? colors.error
+                        : colors.accent
                     }
                   >
                     {"\u2022"} {log}
@@ -313,11 +314,11 @@ export const BetterCommitApp: React.FC<AppProps> = ({
   if (state.stagedFiles.length === 0 && !state.error) {
     return (
       <Box flexDirection="column" padding={2} justifyContent="center">
-        <Text bold color="#8b5cf6">
+        <Text bold color={colors.primary}>
           Better-Commit
         </Text>
         <Box marginTop={1}>
-          <Text color="#6b7280">Loading staged files...</Text>
+          <Text color={colors.text.muted}>Loading staged files...</Text>
         </Box>
       </Box>
     );
@@ -330,10 +331,10 @@ export const BetterCommitApp: React.FC<AppProps> = ({
         paddingX={2}
         paddingY={1}
         borderStyle="round"
-        borderColor="#334155"
+        borderColor={colors.border.default}
       >
         <Box flexGrow={1} justifyContent="center" alignItems="center">
-          <Text bold color="#22c55e">
+          <Text bold color={colors.accent}>
             {exitMessage}
           </Text>
         </Box>
@@ -347,14 +348,17 @@ export const BetterCommitApp: React.FC<AppProps> = ({
       paddingX={2}
       paddingY={1}
       borderStyle="round"
-      borderColor="#334155"
+      borderColor={colors.border.default}
     >
       {/* Header */}
       <Box marginBottom={1} alignItems="center">
-        <Text bold color="#22d3ee">
+        <Text bold color={colors.primary}>
           Better-Commit
         </Text>
-        <Text color="#94a3b8"> • AI-powered commit suggestions</Text>
+        <Text color={colors.text.secondary}>
+          {" "}
+          • AI-powered commit suggestions
+        </Text>
       </Box>
 
       {/* Staged Files */}
@@ -385,19 +389,19 @@ export const BetterCommitApp: React.FC<AppProps> = ({
       {!isCustomInputMode && (
         <Box
           borderStyle="round"
-          borderColor="#334155"
+          borderColor={colors.border.default}
           paddingY={1}
           paddingX={2}
         >
           <Box>
-            <Text color="#38bdf8">↑↓</Text>
-            <Text color="#94a3b8"> navigate</Text>
-            <Text color="#94a3b8"> </Text>
-            <Text color="#22c55e">Enter</Text>
-            <Text color="#94a3b8"> select</Text>
-            <Text color="#94a3b8"> </Text>
-            <Text color="#f97316">Esc</Text>
-            <Text color="#94a3b8"> exit</Text>
+            <Text color={colors.primary}>↑↓</Text>
+            <Text color={colors.text.secondary}> navigate</Text>
+            <Text color={colors.text.secondary}> </Text>
+            <Text color={colors.accent}>Enter</Text>
+            <Text color={colors.text.secondary}> select</Text>
+            <Text color={colors.text.secondary}> </Text>
+            <Text color={colors.warning}>Esc</Text>
+            <Text color={colors.text.secondary}> exit</Text>
           </Box>
         </Box>
       )}
