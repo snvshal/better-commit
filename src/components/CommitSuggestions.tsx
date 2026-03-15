@@ -146,7 +146,7 @@ export const CommitSuggestions: React.FC<CommitSuggestionsProps> = ({
             <Text
               color={
                 selectedIndex === suggestions.length
-                  ? colors.primary
+                  ? colors.accent
                   : colors.text.muted
               }
               bold={selectedIndex === suggestions.length}
