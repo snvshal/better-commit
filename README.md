@@ -65,18 +65,6 @@ sncommit -p
 sncommit -ap
 ```
 
-### Alias
-
-You can use the short alias `sc` instead of typing `sncommit`:
-
-```bash
-sc          # Generate commit
-sc -a       # Stage all and commit
-sc -p       # Commit and push
-sc -ap      # Stage all, commit, and push
-sc config   # Open configuration
-```
-
 ### 3. Workflow
 
 1.  **Select**: App shows 4 AI-generated suggestions based on your changes.

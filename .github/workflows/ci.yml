@@ -32,7 +32,8 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile --ignore-scripts
+        run: bun install --frozen-lockfile --ignore- 
+        ripts
 
       - name: Run type check
         run: bun run type-check
@@ -84,7 +85,6 @@ jobs:
       - name: Verify CLI works when installed globally
         run: |
           sncommit --help
-          sc --help
 
       - name: Show package contents
         run: npm pack --dry-run
