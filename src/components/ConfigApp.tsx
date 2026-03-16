@@ -243,7 +243,7 @@ export const ConfigApp: React.FC<ConfigAppProps> = ({ onExit }) => {
         <>
           <Box marginBottom={1}>
             <Text bold color={colors.primary}>
-              Configure Better-Commit
+              Configure Sncommit
             </Text>
           </Box>
 

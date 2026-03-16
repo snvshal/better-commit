@@ -126,7 +126,7 @@ export const BetterCommitApp: React.FC<AppProps> = ({
       setState((prev) => ({
         ...prev,
         error:
-          'Groq API key not configured. Run "better-commit config" to set it up.',
+          'Groq API key not configured. Run "sncommit config" to set it up.',
         isLoading: false,
       }));
       return;
@@ -309,7 +309,7 @@ export const BetterCommitApp: React.FC<AppProps> = ({
     return (
       <Box flexDirection="column" padding={2} justifyContent="center">
         <Text bold color={colors.primary}>
-          Better-Commit
+          Sncommit
         </Text>
         <Box marginTop={1}>
           <Text color={colors.text.muted}>Loading staged files...</Text>
@@ -348,7 +348,7 @@ export const BetterCommitApp: React.FC<AppProps> = ({
       {/* Header */}
       <Box marginBottom={1} alignItems="center">
         <Text bold color={colors.primary}>
-          Better-Commit
+          Sncommit
         </Text>
         <Text color={colors.text.secondary}>
           {" "}
