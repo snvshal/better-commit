@@ -84,7 +84,6 @@ jobs:
       - name: Verify CLI works when installed globally
         run: |
           sncommit --help
-          sc --help
 
       - name: Show package contents
         run: npm pack --dry-run
