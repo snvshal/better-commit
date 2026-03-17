@@ -31,7 +31,6 @@ export const BetterCommitApp: React.FC<AppProps> = ({
     warning: undefined,
   });
 
-  const [isUsingFallback, setIsUsingFallback] = useState(false);
   const [exitMessage, setExitMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | undefined>(
     undefined,
@@ -171,14 +170,12 @@ export const BetterCommitApp: React.FC<AppProps> = ({
         );
       }
 
-      const hasFallback = suggestions.some((s) => s.isFallback);
       setState((prev) => ({
         ...prev,
         suggestions,
         isLoading: false,
         error: undefined,
       }));
-      setIsUsingFallback(hasFallback);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
@@ -425,7 +422,6 @@ export const BetterCommitApp: React.FC<AppProps> = ({
           onTryAgain={handleTryAgain}
           onCustomInput={handleCustomInput}
           isLoading={state.isLoading}
-          isUsingFallback={isUsingFallback}
         />
       )}
 

@@ -17,7 +17,6 @@ export interface CommitSuggestion {
   message: string;
   type?: string;
   description?: string;
-  isFallback?: boolean;
 }
 
 export interface GitCommit {

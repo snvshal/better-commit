@@ -212,41 +212,6 @@ ${customPrompt}
 Output ONLY valid JSON.`;
   }
 
-  private getFallbackSuggestions(stagedFiles: GitFile[]): CommitSuggestion[] {
-    const fileNames =
-      stagedFiles.length > 0
-        ? stagedFiles
-            .map((f) => f.path)
-            .slice(0, 3)
-            .join(", ") + (stagedFiles.length > 3 ? "..." : "")
-        : "files";
-
-    const suggestions = [
-      {
-        message: `feat: add ${fileNames}`,
-        type: "feat",
-        description: `feat: add ${fileNames}`,
-      },
-      {
-        message: `fix: update ${fileNames}`,
-        type: "fix",
-        description: `fix: update ${fileNames}`,
-      },
-      {
-        message: `refactor: improve ${fileNames}`,
-        type: "refactor",
-        description: `refactor: improve ${fileNames}`,
-      },
-      {
-        message: `docs: update ${fileNames}`,
-        type: "docs",
-        description: `docs: update ${fileNames}`,
-      },
-    ];
-
-    return suggestions;
-  }
-
   private buildPrompt(
     stagedFiles: GitFile[],
     diff: string,
