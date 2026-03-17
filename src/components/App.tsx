@@ -375,7 +375,7 @@ export const BetterCommitApp: React.FC<AppProps> = ({
   return (
     <Box
       flexDirection="column"
-      paddingX={2}
+      paddingX={3}
       paddingY={1}
       borderStyle="round"
       borderColor={colors.border.default}
